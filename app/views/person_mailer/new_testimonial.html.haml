@@ -1,0 +1,19 @@
+= t("emails.new_testimonial.has_given_you_feedback_in_kassi", :name => @testimonial.author.name) + "."
+
+- unless @testimonial.text.eql?("")
+  %div{:style => "margin: 15px 0; padding: 10px; background-color: #d1c9b4;"}
+    %i
+      - text_with_line_breaks do
+        = @testimonial.text
+    %br/
+    = t("people.profile_feedback.grade").capitalize + " " + grade_text(@testimonial.displayed_grade).downcase + "."
+    
+- if @testimonial.receiver.can_give_feedback_on?(@testimonial.participation.conversation)
+  = t("emails.new_testimonial.you_can_give_feedback_to", :name => @testimonial.author.given_name_or_username)
+  = link_to(@give_feedback_url, @give_feedback_url + "?ref=email")
+  %br/
+  %br/
+
+= t("emails.new_testimonial.you_can_view_all_your_feedback_in")
+= link_to(@url, @url + "?ref=email")
+
